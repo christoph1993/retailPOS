@@ -68,6 +68,19 @@ app.post('/sales', function(req, res){
     console.log(req.body);
 });
 
+app.post('/sales/get-product', function(req, res){
+    var item = parseInt(req.body.item);
+    var query = "SELECT p.productCode, p.productType, p.productStyle, p.productGender,\
+                 p.productSize, p.productCost FROM products p WHERE p.productCode=?";
+    var table = item;
+    query = mysql.format(query, table);
+    console.log(query);
+    connection.query(query, function(err, rows) {
+        if(err) console.log(err);
+        res.json(rows);
+    });
+});
+
 app.get('/inventory', function(req, res){
     //send inventory page
 });
