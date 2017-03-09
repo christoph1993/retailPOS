@@ -45,7 +45,7 @@
         margin-left: 210px;
     }
 
-    .sale-remove {
+    .row-remove, .sale-remove {
         display:none;
     }
 }
