@@ -1,0 +1,33 @@
+{
+    "databaseOptions":{
+        "host": "localhost",
+        "port": 3306,
+        "user": "root",
+        "password": "Chris@Msql01",
+        "database": "GSHSUniform",
+        "connectionLimit": 100
+    },
+    "server": {
+        "host": "127.0.0.1",
+        "port": 3000
+    },
+    "sessionOptions": {
+        "host": "127.0.0.1",
+        "port": 3306,
+        "user": "root",
+        "password": "Chris@Msql01",
+        "database": "GSHSUniform",
+        "checkExpirationInvterval": 900000,
+        "expiration": 86400000,
+        "createDatabaseTable": true,
+        "connectionLimit": 1,
+        "schema": {
+            "tableName": "sessions",
+            "columnNames": {
+                "session_id": "session_id",
+                "expires": "expires",
+                "data": "data"
+            }
+        }
+    }
+}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/header %>
+</head>
+<body>
+    <% include ../partials/page_navbar %>
+
+    <% include ../partials/page_sidebar %>
+
+    <form class="for-sidebar for-header" action="">
+        <div><label for="sales">Product Code</label><input type="text" name="sales" id="sales" class="form-control add-sale-text"></div><br>
+        <button type="button" class="btn btn-default add-sale" name="add">Add Sale</button>
+    </form>
+
+    <table class="table table-striped for-sidebar-table">
+        <thead>
+            <th>Product Code</th>
+            <th class="sale-remove">Product Type</th>
+            <th class="sale-remove">Product Style</th>
+            <th class="sale-remove">Gender</th>
+            <th class="sale-remove">Size</th>
+            <th>Cost</th>
+        </thead>
+        <tbody></tbody>
+    </table><br>
+
+    <form action="" class="for-sidebar"><button class="btn btn-default clear-sale" name="clear">Clear Sale</button></form>
+
+</body>
+</html>

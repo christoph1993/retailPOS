@@ -1,0 +1,3 @@
+table.sale-table tbody:empty {
+    display: none;
+}
