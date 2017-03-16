@@ -1,33 +1,36 @@
 import React, { Component } from 'react';
-import './sales.styling.css';
 
 class SaleTable extends Component {
     render() {
-        if(this.props.rows) {
-            const { rows }= this.props.rows;
+        var r = this.props.rows.map((row) => {
             return (
-                <table>
-                    <thead>
-                        <tr>
-                            <td>Product Code</td>
-                            <td>Product Description 1</td>
-                            <td>Product Description 2</td>
-                            <td>Product Quantity</td>
-                            <td>Product Cost</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        rows.map((row) => {
+                <tr key={row[0]['productCode']}>
+                    <td>{row[0]['productCode']}</td>
+                    <td>{row[0]['productType']}</td>
+                    <td>{row[0]['productStyle']}</td>
+                    <td>{row[0]['quantity']}</td>
+                    <td>{row[0]['productCost']}</td>
+                </tr>
+            )})
+
+        if(this.props.rows.length > 0) {
+            return (
+                <div>
+                    <table className="table table-striped sale-table">
+                        <thead>
                             <tr>
-                                <td>row.code</td>
-                                <td>row.description1</td>
-                                <td>row.description2</td>
-                                <td>row.quantity</td>
-                                <td>row.cost</td>
+                                <td>Product Code</td>
+                                <td>Product Type</td>
+                                <td>Product Style</td>
+                                <td>Product Quantity</td>
+                                <td>Product Cost</td>
                             </tr>
-                        });
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {r}
+                        </tbody>
+                    </table>
+                </div>
             );
         } else {
             return (

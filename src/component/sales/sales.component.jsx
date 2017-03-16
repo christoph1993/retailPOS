@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './sales.styling.css';
 
 //Form components
 import CheckboxRadioButton from '../form/checkbox-radiobutton.component.jsx';
@@ -12,7 +11,7 @@ import SaleForm from './saleform.component.jsx';
 class Sales extends Component {
     render() {
         return (
-            <div className="form-control">
+            <div>
                 <SaleForm />
             </div>
         )

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './sales.styling.css';
 
 //Form components
 import CheckboxRadioButton from '../form/checkbox-radiobutton.component.jsx';
@@ -15,14 +14,15 @@ class SaleForm extends Component {
 
         //Set initial State
         this.state = {
-            saleISBN: 0,
+            saleISBN: '',
             rows: []
         };
 
         //All handle functions here
         this.handleSaleISBN = this.handleSaleISBN.bind(this);
         this.handleSaleButton = this.handleSaleButton.bind(this);
-        
+        this.handleFormSubmit = this.handleFormSubmit.bind(this);
+        this.handleClearForm = this.handleClearForm.bind(this);
 
     }
 
@@ -32,20 +32,37 @@ class SaleForm extends Component {
 
     handleSaleButton(e) {
         e.preventDefault();
+        var rowArray = this.state.rows;
 
         //Send ISBN to server, retrieve data and add to rows. This will render it through SaleTable.
         const formPayload = {
-            saleISBN: this.state.ISBN
+            saleISBN: this.state.saleISBN
         }
 
-        fetch('URI', {
+        fetch('sale/addproduct', {
             method: 'POST',
             headers: {
                 'Accept':'application/json',
                 'Content-Type':'application/json'
             },
             body: JSON.stringify(formPayload)
-        }).then(function(response){console.log(response)});
+        }).then((response) => { return response.json() })
+          .then((returnedValue) => { 
+              var quantity;
+              var index = rowArray.findIndex(array => returnedValue[0]['productCode'] === array[0]['productCode']);
+              console.log(index, returnedValue[0]['productCode']); 
+              if(index>-1){
+                  rowArray[index][0].quantity = rowArray[index][0].quantity + 1;
+                  rowArray[index][0].productCost = rowArray[index][0].quantity * rowArray[index][0].productCost; 
+              } else {
+                  quantity = 1;
+                  returnedValue[0]['quantity'] = quantity;
+                  rowArray.push(returnedValue);
+              }
+              this.setState({ rows: rowArray });
+              this.setState({ saleISBN: '' });
+           })
+          .catch(function(err){console.log(err)});
     }
 
     handleFormSubmit(e) {
@@ -69,25 +86,30 @@ class SaleForm extends Component {
 
     render() {
         return(
-            <form className="container" onSubmit={this.handleFormSubmit}>
+            <div>
+            <form className="container">
                 <h3>Sales</h3>
                 <div className="form-group">
                     <TextInput
                         name={"saleIsbn"}
                         title={"ISBN"}
-                        inputType={"number"}
+                        inputType={"text"}
                         controlFunction={this.handleSaleISBN}
-                        content={this.state.ISBN}
+                        content={this.state.saleISBN}
                         placeholder={'Enter ISBN here...'}
                     />
                 </div>
                 <div className="form-group">
-                    <button className="btn btn-default" onClick={this.handleSaleButton} />
+                    <button className="btn btn-default" onClick={this.handleSaleButton}>Add Product</button>
                 </div>
-                <SaleTable rows={this.state.rows} />
             </form>
+            <SaleTable rows={this.state.rows} />
+            <button className="btn btn-default" onClick={this.handleClearForm}>Clear Sale</button>
+            <button className="btn btn-default" onClick={this.handleFormSubmit}>Sell</button>
+            </div>
         )
     }
 
 }
 
+export default SaleForm;
