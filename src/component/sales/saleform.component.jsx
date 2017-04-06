@@ -69,9 +69,18 @@ class SaleForm extends Component {
         //Function to handle form submission
         e.preventDefault();
         
-        
+        var formPayload = { data: this.state.rows };
 
-        this.handleClearForm(e)
+        fetch('sale/newSale', {
+            method: 'POST',
+            headers: {
+                'Accept':'application/json',
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify(formPayload)
+        })
+        .then( this.handleClearForm(e) )
+        .catch((err) => {console.log(err)});
     }
 
     handleClearForm(e) {
@@ -79,7 +88,7 @@ class SaleForm extends Component {
         e.preventDefault();
         //Set state to default here...
         this.setState({
-            saleISBN: 0,
+            saleISBN: '',
             rows: []
         });
     }

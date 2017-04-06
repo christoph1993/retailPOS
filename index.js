@@ -20,12 +20,17 @@ app.post('/sale/addproduct', function(req, res){
                                   p.productSize, p.productCost FROM products p WHERE p.productCode=?",[saleISBN]);
         connection.query(query, function(err, rows){
            if(err) { console.log(err) }
-           console.log(rows);
            res.json(rows); 
         });
     } catch(err) {
         console.log(err);
     }
+});
+
+app.post('/sale/newSale', function(req, res){
+    var saledata = req.body.data;
+    var query = "INSERT INTO ";//sql queries here...
+    res.sendStatus(200);
 });
 
 app.get('*', function(req, res){
